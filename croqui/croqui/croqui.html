@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Croqui Transmoreira</title>
+    <link rel="stylesheet" href="croqui.css">
+    <!-- Bibliotecas de exportação -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <!-- NAVBAR -->
+        <nav class="navbar">
+            <div class="navbar-brand">
+                <img src="img/m.jpg" alt="Logo" class="header-logo" style="margin-right: 8px;">
+                <img src="img/rionegro.jpg" alt="Logo" class="header-logo" style="width: 110px; height: auto;">
+                <span class="navbar-title">Croqui - Grupo Transmoreira</span>
+            </div>
+            <div class="navbar-info">
+                <h1>Simulador de Croquis</h1>
+                <p>Crie esboços de acidentes de trânsito</p>
+            </div>
+            <div class="navbar-controls">
+                <div class="zoom-controls">
+                    <button class="nav-btn" onclick="zoomOut()" title="Diminuir zoom">−</button>
+                    <button class="nav-btn" onclick="zoomIn()" title="Aumentar zoom">+</button>
+                </div>
+                <button class="nav-btn" onclick="toggleGrid()" title="Ativar/desativar grade">📐 Grade</button>
+                <div class="dropdown">
+                    <button class="nav-btn dropbtn" title="Opções de exportação">📥 Exportar</button>
+                    <div class="dropdown-content">
+                        <a href="#" onclick="exportPNG(); return false;">Exportar como PNG</a>
+                        <a href="#" onclick="exportJPEG(); return false;">Exportar como JPEG</a>
+                        <a href="#" onclick="exportPDF(); return false;">Exportar como PDF</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- MAIN CONTENT -->
+        <main>
+            <!-- PALETTE -->
+            <aside class="palette">
+                <div class="palette-header">
+                    <h2>Paleta de Elementos</h2>
+                    <p>Clique para adicionar ao canvas</p>
+                </div>
+                <div class="palette-items" id="paletteItems"></div>
+                <div class="palette-footer">
+                    Dica: Arraste para mover, gire com a roda do mouse
+                </div>
+            </aside>
+
+            <!-- CANVAS AREA -->
+            <div class="canvas-container">
+                <div class="export-wrapper" id="exportWrapper">
+                    <!-- EXPORT HEADER (aparece apenas na exportação) -->
+                    <div class="export-header">
+                        <div class="header-left">
+                            <img src="img/m.jpg" alt="Logo" class="header-logo" style="margin-right: 8px;">
+                            <img src="img/rionegro.jpg" alt="Logo" class="header-logo" style="width: 130px; height: auto;">
+                        </div>
+                        <div class="header-center">
+                            <h2 class="company-name">GRUPO TRANSMOREIRA</h2>
+                            <p class="document-title">Croqui de Acidente de Trânsito</p>
+                        </div>
+                        <div class="header-right">
+                            <p class="export-date" id="exportDate">Data: --/--/---- - Hora: --:--</p>
+                        </div>
+                    </div>
+
+                    <!-- CANVAS COM SCROLL -->
+                    <div id="canvasScroll" class="canvas-scroll">
+                        <div id="canvas" class="canvas">
+                            <div id="canvasEmpty" class="canvas-empty">
+                                Clique em um elemento na paleta para começar
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CANVAS CONTROLS -->
+                <div class="canvas-controls">
+                    <div class="canvas-controls-info">
+                        <span id="objectCount">0 objetos</span>
+                    </div>
+                    <div style="display: flex; gap: 10px;">
+                        <button class="save-btn" id="saveBtn" onclick="saveCroqui()" title="Salvar croqui">💾 Salvar</button>
+                        <button class="nav-btn" onclick="openNotesModal()" title="Adicionar anotações">📝 Anotações</button>
+                        <button class="clear-btn" id="clearBtn" onclick="clearCanvas()" title="Limpar canvas" disabled>🗑️ Limpar</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="footer">
+            <small>Desenvolvido por Pablo • 2025</small>
+        </footer>
+
+    </div>
+
+    <!-- MODAL DE ANOTAÇÕES -->
+    <div id="notesModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Anotações do Croqui</h2>
+                <span class="close-btn" onclick="closeNotesModal()">&times;</span>
+            </div>
+            <textarea id="notes" placeholder="Digite suas anotações aqui..."></textarea>
+            <div class="modal-footer">
+                <button class="nav-btn" onclick="closeNotesModal()">Fechar</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="croqui.js"></script>
+</body>
+</html>
